@@ -14,9 +14,6 @@ public class AnswerOption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@ManyToOne
-    //private QuizQuestion quizquestion;
-
     private String Option;
 
     public AnswerOption() {
@@ -24,7 +21,6 @@ public class AnswerOption {
 
     public AnswerOption(String answerOption) {
         this.Option = answerOption;
-        //id = count.incrementAndGet();
     }
 
     public Long getId() {

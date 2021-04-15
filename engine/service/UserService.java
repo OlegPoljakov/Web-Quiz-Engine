@@ -1,8 +1,6 @@
 package engine.service;
 
-import engine.exceptions.QuestionNotFoundException;
 import engine.exceptions.UserNotFoundException;
-import engine.model.QuizQuestion;
 import engine.model.UserInformation;
 import engine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +28,6 @@ public class UserService {
     public boolean ifUserExists(String email) {
         return  userRepository.existsByEmail(email);
     }
-
-    /*
-    public UserInformation findByEmail(String email){
-        return userRepository.getUserByEmail(email);
-    }
-    */
 
     public UserInformation findByEmail(String email){
         Optional<UserInformation> requiredUser = Optional.ofNullable(userRepository.getUserByEmail(email));

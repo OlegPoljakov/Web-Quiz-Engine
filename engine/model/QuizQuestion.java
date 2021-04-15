@@ -28,7 +28,7 @@ public class QuizQuestion {
     @NotBlank
     @NotEmpty
     private String title;
-    
+
 
     @NotBlank
     @NotEmpty

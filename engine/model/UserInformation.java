@@ -1,14 +1,11 @@
 package engine.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import engine.model.QuizQuestion;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name="userstorage")
@@ -20,27 +17,18 @@ public class UserInformation {
     private int id;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    //@Column
     private final boolean active = true;
 
-    //@Column
-    //@Size(max = 300)
     @NotNull
     @Size(min = 5)
-    //@Pattern(regexp = "\\S+")
     private String password;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    //@Column
     private final String roles = "ROLE_ADMIN";
 
     @NotNull
-    //@Column
     @Pattern(regexp = ".+@.+\\..+")
     private String email;
-
-    //@OneToMany(mappedBy="usr")
-    //private Set<QuizQuestion> questions  = new HashSet<>();
 
     public int getId() {
         return id;
@@ -77,12 +65,4 @@ public class UserInformation {
     public boolean isActive() {
         return active;
     }
-
-    /*
-    public Set<QuizQuestion> getQuestions() { return questions; }
-
-    public void setQuestions(Set<QuizQuestion> questions) {
-        this.questions = questions;
-    }
-    */
 }

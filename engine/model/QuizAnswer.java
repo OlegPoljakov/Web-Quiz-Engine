@@ -2,16 +2,18 @@ package engine.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class QuizAnswer {
 
-    private static final List<Integer> emptyList = new ArrayList<>();
     private static final Integer[] emptyArray = {};
 
     public QuizAnswer() {
@@ -23,9 +25,6 @@ public class QuizAnswer {
     private String feedback;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    //@NotNull
-    //@NotEmpty
-    //private List<Integer> answer;
     private Integer[] answer;
 
     public boolean getSuccess() {
@@ -45,7 +44,6 @@ public class QuizAnswer {
     }
 
     public Integer[] getAnswer() {
-        //return answer == null ? new int[]{} : answer;
         return answer;
     }
 

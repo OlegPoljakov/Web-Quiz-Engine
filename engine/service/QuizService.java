@@ -4,8 +4,13 @@ import engine.exceptions.QuestionNotFoundException;
 import engine.model.QuizQuestion;
 import engine.model.UserInformation;
 import engine.repository.QuizRepository;
+import engine.repository.QuizRepositoryPaged;
 import engine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,11 +25,15 @@ import java.util.Optional;
 public class QuizService {
     private final QuizRepository quizRepository;
     private final UserRepository userRepository;
+    private final QuizRepositoryPaged quizRepositoryPaged;
 
     @Autowired
-    public QuizService(QuizRepository quizRepository, UserRepository userRepository) {
+    public QuizService(QuizRepository quizRepository,
+                       UserRepository userRepository,
+                       QuizRepositoryPaged quizRepositoryPaged) {
         this.quizRepository = quizRepository;
         this.userRepository = userRepository;
+        this.quizRepositoryPaged = quizRepositoryPaged;
     }
 
     @Transactional
@@ -58,11 +67,6 @@ public class QuizService {
         }
     }
 
-    /*
-    public void deleteQuizById(String id) {
-        quizRepository.deleteById(Long.parseLong(id, 10));
-    }
-    */
 
     public ResponseEntity<String> deleteById(String id, Principal principal) {
         UserInformation user = userRepository.getUserByEmail(principal.getName());
@@ -80,6 +84,18 @@ public class QuizService {
         else {
             return new ResponseEntity<String>("Forbidden", HttpStatus.FORBIDDEN);
         }
+    }
 
+    public  Page<QuizQuestion> getAllQuizesPaged(Integer pageNo, Integer pageSize, String sortBy)
+    {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+
+        Page<QuizQuestion> pagedResult = quizRepositoryPaged.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult;
+        } else {
+            return null;
+        }
     }
 }
